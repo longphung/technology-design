@@ -1,0 +1,15 @@
+# nodejs server gitignore template
+node_modules
+npm-debug.log
+yarn-error.log
+yarn-debug.log
+.env.local
+
+# intellij tools
+.idea
+*.iml
+*.ipr
+*.iws
+
+# vscode tools
+.vscode
