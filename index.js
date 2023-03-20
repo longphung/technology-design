@@ -1,3 +1,5 @@
+const puppeteer = require("puppeteer");
+const {text} = require("express");
 const app = require('express')();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
@@ -5,6 +7,21 @@ const io = require('socket.io')(http);
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
+
+app.get('/faqs', async (req, res) => {
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+  await page.goto('https://www.swinburneonline.edu.au/faqs/');
+  const faqs = await page.$$('.faqs-group .card');
+  const result = await Promise.all(faqs.map(async (faq) => {
+    const questionEl = await faq.$('.card-header h5 > div:nth-child(2)');
+    const answerEl = await faq.$('.card-body .content');
+    const result = await Promise.all([page.evaluate(el => el.textContent, questionEl), page.evaluate(el => el.textContent, answerEl)])
+    console.log(result)
+    return result
+  }))
+  res.send(result);
+})
 
 io.on('connection', (socket) => {
   console.log('Client connected');
