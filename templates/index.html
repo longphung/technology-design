@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Socket.io Chat Example</title>
+</head>
+<body>
+<ul id="messages"></ul>
+<form id="chat-form">
+    <input id="message-input" autocomplete="off"/>
+    <button>Send</button>
+</form>
+<script type="module">
+    import {io} from "https://cdn.socket.io/4.4.1/socket.io.esm.min.js";
+    // Connect to the server at localhost 8080
+    const socket = io.connect('http://' + document.domain + ':' + location.port);
+
+
+    // When a message is received from the server
+    socket.on('message', (msg) => {
+        const li = document.createElement('li');
+        li.innerText = msg;
+        document.querySelector('#messages').appendChild(li);
+    });
+
+    // When the chat form is submitted
+    document.querySelector('#chat-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const input = document.querySelector('#message-input');
+        const msg = input.value;
+        input.value = '';
+        socket.emit('message', msg);
+    });
+</script>
+</body>
+</html>
