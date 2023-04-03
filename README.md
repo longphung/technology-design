@@ -15,8 +15,8 @@ The following steps are instructions for Linux and macOS. If you are using Windo
 1. Clone this repository:
 
 ```bash
-git clone https://github.com/yourusername/flask-chat-faqs.git
-cd flask-chat-faqs
+git clone git@github.com:longphung/technology-design.git
+cd technology-design
 ```
 
 2. Create a virtual environment and activate it:
