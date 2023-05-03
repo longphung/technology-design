@@ -20,7 +20,7 @@ cd technology-design
 ```
 
 2. Create a virtual environment and activate it:
-
+[README.md](README.md)
 ```bash
 python3 -m venv venv
 source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
@@ -45,3 +45,8 @@ By default, the application will run on localhost with port 8000.
 Open a web browser and go to http://localhost:8000 to use the chat interface.
 To access the FAQs, go to http://localhost:8000/faqs.
 
+## Development
+### Folder Structure
+- `app.py`: Main application file.
+- `templates/`: HTML templates.
+- `labs/`: Jupyter notebooks for testing and model development.
