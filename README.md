@@ -1,5 +1,14 @@
 # Swinburne Technology Design Group Project: AI FAQ Answerer
 
+## Contributors
+|              |                               |
+|--------------|-------------------------------|
+| Ashmin Karki | 104081193@student.swin.edu.au |
+| Justin Li    | 104138316@student.swin.edu.au |
+| Le Vy Cao    | 104201234@student.swin.edu.au |
+| Phung Nguyen | 104099316@student.swin.edu.au |
+___
+
 ## Introduction
 Example of fetching faq from Swinburne online.
 Attached is example.gif: ![Swinburne FAQ Fetch](./example.gif "Swinburne FAQ Fetch")
@@ -47,6 +56,7 @@ To access the FAQs, go to http://localhost:8000/faqs.
 
 ## Development
 ### Folder Structure
+There are 3 main components to this project:
 - `app.py`: Main application file.
 - `templates/`: HTML templates.
 - `labs/`: Jupyter notebooks for testing and model development.
