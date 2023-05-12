@@ -3,7 +3,7 @@ from io import StringIO
 from flask import Flask, render_template, Response
 from flask_socketio import SocketIO, emit
 
-from utils import swinburne_utils
+from utils import faqs
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
@@ -17,12 +17,12 @@ def hello_world():
 
 @app.get('/faqs')
 def faqs():
-    return swinburne_utils.get_faqs()
+    return faqs.get_swinburne_faqs()
 
 
 @app.get('/faqs/download')
 def download_faqs():
-    questions_answers = swinburne_utils.get_faqs()
+    questions_answers = faqs.get_swinburne_faqs()
 
     def generate_csv():
         in_memory_file = StringIO()
