@@ -1,28 +1,34 @@
+// Importing the bot and user svg files
 import bot from './assets/bot.svg'
 import user from './assets/user.svg'
 
+// Selecting the HTML elements
 const form = document.querySelector('form')
 const chatContainer = document.querySelector('#chat_container')
 
+// Declaring the loadInterval variable
 let loadInterval
 
+// Loader function to create typing animation with the loading indicator
 function loader(element) {
     element.textContent = ''
 
+    // Start the interval to update the text content of the loading indicator
     loadInterval = setInterval(() => {
-        // Update the text content of the loading indicator
-        element.textContent += '.';
+        element.textContent += '.'
 
-        // If the loading indicator has reached three dots, reset it
+        // Reset the loading indicator if it has reached three dots
         if (element.textContent === '....') {
-            element.textContent = '';
+            element.textContent = ''
         }
-    }, 300);
+    }, 300)
 }
 
+// Function to type text with a typing effect
 function typeText(element, text) {
     let index = 0
 
+    // Start the interval to type the text with a typing effect
     let interval = setInterval(() => {
         if (index < text.length) {
             element.innerHTML += text.charAt(index)
@@ -33,17 +39,18 @@ function typeText(element, text) {
     }, 20)
 }
 
-// generate unique ID for each message div of bot
-// necessary for typing text effect for that specific reply
-// without unique ID, typing text will work on every element
+// Function to generate a unique ID for each message div of the bot
+// Necessary for typing text effect for that specific reply
+// Without unique ID, typing text will work on every element
 function generateUniqueId() {
-    const timestamp = Date.now();
-    const randomNumber = Math.random();
-    const hexadecimalString = randomNumber.toString(16);
+    const timestamp = Date.now()
+    const randomNumber = Math.random()
+    const hexadecimalString = randomNumber.toString(16)
 
-    return `id-${timestamp}-${hexadecimalString}`;
+    return `id-${timestamp}-${hexadecimalString}`
 }
 
+// Function to create chat stripe
 function chatStripe(isAi, value, uniqueId) {
     return (
         `
@@ -62,28 +69,29 @@ function chatStripe(isAi, value, uniqueId) {
     )
 }
 
+// Function to handle form submit
 const handleSubmit = async (e) => {
     e.preventDefault()
 
     const data = new FormData(form)
 
-    // user's chatstripe
+    // User's chat stripe
     chatContainer.innerHTML += chatStripe(false, data.get('prompt'))
 
-    // to clear the textarea input 
+    // Clear the textarea input 
     form.reset()
 
-    // bot's chatstripe
+    // Bot's chat stripe
     const uniqueId = generateUniqueId()
     chatContainer.innerHTML += chatStripe(true, " ", uniqueId)
 
-    // to focus scroll to the bottom 
-    chatContainer.scrollTop = chatContainer.scrollHeight;
+    // Focus scroll to the bottom 
+    chatContainer.scrollTop = chatContainer.scrollHeight
 
-    // specific message div 
+    // Specific message div 
     const messageDiv = document.getElementById(uniqueId)
 
-    // messageDiv.innerHTML = "..."
+    // Show the loading indicator
     loader(messageDiv)
 
     const response = await fetch('http://localhost:5000/', {
@@ -100,9 +108,10 @@ const handleSubmit = async (e) => {
     messageDiv.innerHTML = " "
 
     if (response.ok) {
-        const data = await response.json();
-        const parsedData = data.bot.trim() // trims any trailing spaces/'\n' 
+        const data = await response.json()
+        const parsedData = data.bot.trim() // Trim any trailing spaces/'\n' 
 
+        // Type the bot's response with typing effect
         typeText(messageDiv, parsedData)
     } else {
         const err = await response.text()
@@ -113,9 +122,11 @@ const handleSubmit = async (e) => {
     }
 }
 
+// Add event listeners to the form for submitting and keyup (if enter is pressed)
 form.addEventListener('submit', handleSubmit)
 form.addEventListener('keyup', (e) => {
     if (e.keyCode === 13) {
         handleSubmit(e)
+
     }
 })
