@@ -6,6 +6,7 @@
       <excludeFolder url="file://$MODULE_DIR$/labs/faq_distilbert" />
       <excludeFolder url="file://$MODULE_DIR$/labs/faq_gpt2" />
       <excludeFolder url="file://$MODULE_DIR$/venv" />
+      <excludeFolder url="file://$MODULE_DIR$/client" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

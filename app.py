@@ -1,13 +1,13 @@
 import csv
 from io import StringIO
-from flask import Flask, render_template, Response
-from flask_socketio import SocketIO, emit
+from flask import Flask, render_template, Response, request
+from flask_cors import CORS
 
-from utils import faqs
+from utils import faqs, models
 
 app = Flask(__name__)
+CORS(app)
 app.config['SECRET_KEY'] = 'secret!'
-socketio = SocketIO(app)
 
 
 @app.get("/")
@@ -46,13 +46,28 @@ def download_faqs():
     )
 
 
-@socketio.on('message')
-def handle_message(msg):
-    print(f'Message: {msg}')
-    emit('message', msg)
-    socketio.sleep(1)
-    socketio.emit('message', f'Hello from the server')
+@app.post('/message')
+def post_message():
+    print(request.json)
+    string = request.json['string']
+    result = models.classify(string)
+    print(result)
+    if result[0] == "in-scope":
+        stream = models.generate_in_scope(string)
+    else:
+        stream = models.generate_out_of_scope(string)
+    return Response(stream, mimetype='text/event-stream')
+
+
+
+async def server_loop(q):
+    while True:
+        (string, response_q) = await q.get()
+        out = models.classify(string)
+        response_q.put_nowait({'out': out, 'string': string})
+
+
 
 
 if __name__ == '__main__':
-    socketio.run(app, debug=True, host='localhost', port=8000)
+    app.run(debug=True, host='localhost', port=8000)
