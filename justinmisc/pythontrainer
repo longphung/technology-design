@@ -1,0 +1,99 @@
+from transformers import DistilBertTokenizer, DistilBertForQuestionAnswering, Trainer, TrainingArguments
+import torch
+import pandas as pd
+import sys
+
+# Load csv data into a pandas dataframe. Format is necessary for training.
+scopedata = pd.read_csv('faq_data_batch_1.csv')
+print('hrrrr')
+# Split the data into training and validation sets
+train_scope_data = scopedata[scopedata['Label'] == 0]  # in-scope data
+valid_scope_data = scopedata[scopedata['Label'] == 1]  # out-of-scope data
+
+# Load the DistilBert tokenizer and model
+tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-uncased')
+model = DistilBertForQuestionAnswering.from_pretrained('distilbert-base-uncased')
+
+# Define a function to preprocess the data and convert it into a suitable format for the model
+def preprocess_data(train_examples, val_examples):
+    train_questions = train_examples['Question'].tolist()
+    train_answers = train_examples['Answer'].tolist()
+    train_inputs = [f'question: {q}  context: {a}' for q, a in zip(train_questions, train_answers)]
+    train_tokenized_inputs = tokenizer(train_inputs, padding=True, truncation=True, return_tensors='pt')
+    train_start_positions = torch.zeros_like(train_tokenized_inputs['input_ids'])
+    train_end_positions = torch.zeros_like(train_tokenized_inputs['input_ids'])
+
+    val_questions = val_examples['Question'].tolist()
+    val_answers = val_examples['Answer'].tolist()
+    val_inputs = [f'question: {q}  context: {a}' for q, a in zip(val_questions, val_answers)]
+    val_tokenized_inputs = tokenizer(val_inputs, padding=True, truncation=True, return_tensors='pt')
+    val_start_positions = torch.zeros_like(val_tokenized_inputs['input_ids'])
+    val_end_positions = torch.zeros_like(val_tokenized_inputs['input_ids'])
+
+    return {
+        'train': {
+            'input_ids': train_tokenized_inputs['input_ids'],
+            'attention_mask': train_tokenized_inputs['attention_mask'],
+            'start_positions': train_start_positions,
+            'end_positions': train_end_positions
+        },
+        'validation': {
+            'input_ids': val_tokenized_inputs['input_ids'],
+            'attention_mask': val_tokenized_inputs['attention_mask'],
+            'start_positions': val_start_positions,
+            'end_positions': val_end_positions
+        }
+        
+    }
+
+# Preprocess the data
+train_data = train_scope_data
+val_data = valid_scope_data
+preprocessed_data = preprocess_data(train_data, val_data)
+
+print("Number of training samples:", len(preprocessed_data['train']['input_ids']))
+print("Number of validation samples:", len(preprocessed_data['validation']['input_ids']))
+
+print("Train input ids shape:", preprocessed_data['train']['input_ids'].shape)
+print("Train attention mask shape:", preprocessed_data['train']['attention_mask'].shape)
+print("Train start positions shape:", preprocessed_data['train']['start_positions'].shape)
+print("Train end positions shape:", preprocessed_data['train']['end_positions'].shape)
+
+print("Validation input ids shape:", preprocessed_data['validation']['input_ids'].shape)
+print("Validation attention mask shape:", preprocessed_data['validation']['attention_mask'].shape)
+print("Validation start positions shape:", preprocessed_data['validation']['start_positions'].shape)
+print("Validation end positions shape:", preprocessed_data['validation']['end_positions'].shape)
+
+
+# Set up the training arguments
+training_args = TrainingArguments(
+    output_dir='./results',
+    num_train_epochs=3,
+    per_device_train_batch_size=16,
+    per_device_eval_batch_size=64,
+    warmup_steps=500,
+    weight_decay=0.01,
+    logging_dir='./logs',
+    logging_steps=10,
+    evaluation_strategy='steps',
+    eval_steps=100,
+    save_total_limit=5,
+    load_best_model_at_end=True,
+    metric_for_best_model='eval_loss',
+    greater_is_better=False
+)
+
+# Set up the trainer
+trainer = Trainer(
+    model=model,
+    args=training_args,
+    train_dataset=preprocessed_data['train'],
+    eval_dataset=preprocessed_data['validation']
+)
+
+# Train the model
+trainer.train()
+
+# Save the model
+filepath = "trainedbot1.pt"
+torch.save(model.state_dict(), filepath)

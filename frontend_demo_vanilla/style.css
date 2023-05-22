@@ -1,0 +1,141 @@
+/*body styles*/
+body {
+	margin: 0;
+	padding: 0;
+	background-color: #f8f8f8;
+	font-family: urw-din,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,Noto Sans,sans-serif;
+
+}
+
+/*img styles*/
+img {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	width: 150px;
+	height: auto;
+    max-width: 150px;
+    border: 5px solid #fff;
+    border-radius: 5px;
+}
+
+/*banner styles*/
+.banner {
+	background-color: black;
+	color: white;
+	padding: 40px;
+	text-align: center;
+}
+
+/*heading styles*/
+h1 {
+	margin: 0;
+	font-size: 24px;
+    font-family: urw-din,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,Noto Sans,sans-serif;
+}
+
+/*container for whole ui*/
+.container {
+	width: 100%;
+	max-width: 600px;
+	margin: 0 auto;
+	padding: 20px;
+	box-sizing: border-box;
+}
+
+/*whole chat ui*/
+.chat-window {
+	background-color: #fff;
+	border-radius: 5px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/*chat convo display*/
+.conversation {
+	height: 300px;
+	overflow-y: scroll;
+}
+
+.chatbot-messages {
+	overflow-y: scroll;
+}
+
+/*bottom section of chat ui*/
+.user-input {
+	display: flex;
+	align-items: center;
+	padding: 10px;
+	background-color: #eee;
+}
+
+/*user input textbox styling*/
+#user-message {
+	flex: 1;
+	padding: 10px;
+	border: none;
+	border-radius: 5px;
+	background-color: #fff;
+	font-size: 16px;
+}
+
+
+/*stylings for button*/
+button[type="submit"] {
+	padding: 10px 20px;
+	border: none;
+	border-radius: 5px;
+	background-color: #ff0000;
+	color: #fff;
+	font-size: 16px;
+	cursor: pointer;
+}
+
+
+/*stylings for button upon hover*/
+button[type="submit"]:hover {
+	background-color: #ff4c4c;
+}
+
+.sent {
+    position: relative;
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #ff4c4c;
+    border-radius: 10px;
+    font-size: 14px;
+    animation-name: fadeIn;
+    animation-duration: 0.5s;
+    animation-fill-mode: both;
+	color: #fff;
+	float: right;
+  	clear: both;
+	margin-right: 10px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.received {
+    position: relative;
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #ff4c4c;
+    color: white;
+    border-radius: 10px;
+    font-size: 14px;
+    animation-name: fadeIn;
+    animation-duration: 0.5s;
+    animation-fill-mode: both;
+	float: left;
+  	clear: both;
+	margin-left: 10px
+}
+

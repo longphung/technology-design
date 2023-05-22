@@ -1,0 +1,37 @@
+<!--html for TDP chatbot page-->
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Swinburne University FAQ Chatbot</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+	<!--heading banner div-->
+	<div class="banner">
+		<img src="logo.png" alt="Swinburne Online logo">
+		<h1>Swinburne Online FAQ Bot</h1>
+	</div>
+
+	<!--contains chatbot ui-->
+	<div class="container">
+		<div class="chat-window">
+			<!--holds conversation information-->
+			<div class="conversation">
+				<div class="chatbot-messages">
+					<div class="received">
+						<p>Hello! How can I help you today?</p>
+					</div>
+				</div>
+			</div>
+			<!--contains text box and submit button-->
+			<div class="user-input">
+				<form>
+					<input type="text" id="user-message" placeholder="Ask a question...">
+					<button type="submit" id="send">Send</button>
+				</form>
+			</div>
+		</div>
+	</div>
+	<script src='message.js'></script>
+</body>
+</html>
