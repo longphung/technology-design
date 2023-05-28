@@ -17,7 +17,7 @@ Attached is example.gif: ![Swinburne FAQ Fetch](./example.gif "Swinburne FAQ Fet
 - Python 3.6+
 - Virtualenv (recommended)
 
-## Installation
+## Main Project Installation
 **Note:** This project uses Python 3.6+. If you have multiple versions of Python installed, you may need to use `python3` and `pip3` instead of `python` and `pip` in the following instructions.
 The following steps are instructions for Linux and macOS. If you are using Windows, you may need to adapt these instructions.
 
@@ -28,14 +28,20 @@ git clone git@github.com:longphung/technology-design.git
 cd technology-design
 ```
 
-2. Create a virtual environment and activate it:
+2. Initialize submodule containing client repository:
+
+```bash
+git submodule update --init --recursive
+```
+
+3. Create a virtual environment and activate it:
 [README.md](README.md)
 ```bash
 python3 -m venv venv
 source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
 ```
 
-3. Install the dependencies:
+4. Install the dependencies:
 
 ```bash
 pip install -r requirements.txt
