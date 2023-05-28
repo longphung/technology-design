@@ -1,7 +1,9 @@
+import os
+
 import openai
 from transformers import pipeline
 
-openai.api_key = "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"
+openai.api_key = os.environ["OPENAI_API_KEY"]
 
 
 def classify(text):
