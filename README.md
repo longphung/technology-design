@@ -16,6 +16,7 @@ Attached is example.gif: ![Swinburne FAQ Fetch](./example.gif "Swinburne FAQ Fet
 ### Requirements:
 - Python 3.6+
 - Virtualenv (recommended)
+- OpenAI API KEY
 
 ## Main Project Installation
 **Note:** This project uses Python 3.6+. If you have multiple versions of Python installed, you may need to use `python3` and `pip3` instead of `python` and `pip` in the following instructions.
@@ -54,6 +55,9 @@ The default Flask port is 5000. I had to use 8000 because macOS uses port 5000 f
 
 ```bash
 python app.py
+# You need an OpenAI key to be able to run the program set by env OPENAI_API_KEY
+# Optionally run your app as:
+OPENAI_API_KEY=xxx_your_key python app.py
 ```
 
 By default, the application will run on localhost with port 8000.
