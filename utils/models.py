@@ -31,12 +31,12 @@ def generate_in_scope(text):
         temperature=0
     )
     response = openai.Completion.create(
-        model='davinci:ft-personal-2023-05-21-04-30-16',
-        prompt=converted_to_question['choices'][0]['message']['content'],
+        model='davinci:ft-personal-2023-05-28-14-49-24',
+        prompt=converted_to_question['choices'][0]['message']['content'] + ' -> ',
         temperature=0,
         max_tokens=200,
         stop=["END OF QUESTION", "END"],
-        frequency_penalty=0.5,
+        frequency_penalty=0.3,
         stream=True
     )
     for line in response:
