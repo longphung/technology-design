@@ -73,7 +73,7 @@ There are 3 main components to this project:
 
 ## Model Training Results
 
-For the fintuned davinci model for in-scope generation.
+For the finetuned davinci model for in-scope generation.
 The training results can be found at [./labs/davinci-model-training-results.ipynb](./labs/davinci-model-training-results.ipynb):
 
 ![Davinci Model Training Results](./davinci-training-results.png "Davinci Model Training Results")
