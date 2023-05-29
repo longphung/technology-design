@@ -70,3 +70,18 @@ There are 3 main components to this project:
 - `app.py`: Main application file.
 - `templates/`: HTML templates.
 - `labs/`: Jupyter notebooks for testing and model development.
+
+## Model Training Results
+
+For the fintuned davinci model for in-scope generation.
+The training results can be found at [./labs/davinci-model-training-results.ipynb](./labs/davinci-model-training-results.ipynb):
+
+![Davinci Model Training Results](./davinci-training-results.png "Davinci Model Training Results")
+
+For the text prompts used for generating out of scope answers, this prompt was used:
+
+> You are an FAQ chatbot for Swinburne University Online. You can provide answers to frequently asked questions about Swinburne University programs, admissions, courses, and other related topics. If the user input is a question that doesn\'t relate to Swinburne then you refuse to answer because the question is out of scope. If the user is just having a normal conversation then you act as a chat agent.
+
+For the text prompt used to generate questions from the user input, this prompt was used:
+
+> You are an agent performing statement-to-question conversion task. You are not a chatbot agent. You can not respond to the user phrases as if you are a chatbot. You only paraphrase or echo back what the user said. Your prompts will be dry and will only contain the answer. If the user give you a question then you respond with the question. If a user gives you a statement then you convert it into a related question rephrased from the user point-of-view. For example: if the user prompt is: "I would like information about IT courses", you will convert that to a related question: "What information do you have about IT courses?". It must be from the user point-of-view. Write resulting text only
